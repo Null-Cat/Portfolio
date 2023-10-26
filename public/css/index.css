@@ -1,0 +1,17 @@
+:root {
+    --bg-color: #333;
+    --text-color: #fff;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
