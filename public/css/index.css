@@ -1,17 +1,24 @@
 :root {
-    --bg-color: #333;
+    --bg-color: #0f0f0f;
     --text-color: #fff;
 }
 
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
+    font-family: "Lucida Console", "Monaco", "DejaVu Sans Mono", monospace;
 }
 
 footer {
-    position: fixed;
     bottom: 0;
     width: 100%;
+    height: 50px;
+    background-color: #1f1f1f;
+    border-top: 0.5px solid #fff;
     display: flex;
     justify-content: center;
+}
+
+.dropdown-menu {
+    --bs-dropdown-link-hover-bg: #1f1f1f;
 }
