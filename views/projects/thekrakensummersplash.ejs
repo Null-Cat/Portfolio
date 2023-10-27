@@ -3,7 +3,9 @@
 
 <head>
     <%- include('../partials/_headerMeta.ejs') %>
-        <meta name="description" content="Azure Abyss">
+        <meta name="description" content='Project: The Kraken Summer Splash, A commissioned project for Kraken Rum for a competition to win a branded arcade machine hosted
+        on the "The League of Darkness" site. Has a fully functional leaderboard with secure score transmission to a
+            secured API backend.'>
         <title>Project: The Kraken Summer Splash</title>
         <link rel="stylesheet" href="/css/index.css">
 </head>
@@ -11,11 +13,46 @@
 <body>
     <%- include('../partials/_navBar.ejs') %>
 
-    <div class="container">
-        <h1 class="text-center">The Kraken Summer Splash</h1>
-    </div>
+        <div class="container">
+            <h1 class="text-center">The Kraken Summer Splash</h1>
+            <div id="krakenflap" userid=00001>
+                <link rel="preload" as="font" href="/js/assets/Kenney Mini Square.ttf" type="font/ttf" crossOrigin>
+                <style>
+                    @font-face {
+                        font-family: kenney_mini_square_regular;
+                        src: url('/js/assets/Kenney\ Mini\ Square.ttf');
+                    }
+                </style>
+                <script src="/js/krakenflap.js" defer></script>
+            </div>
 
-    <%- include('../partials/_bootstrapJS.ejs') %>
+            <div class="row" style="padding-top: 25px;">
+                <div class="col-sm-12 col-md-6">
+                    <h3>Project Description</h3>
+                    <p>Player 1. Are you ready? Fancy snaring a genuine one-off Kraken Freaky Tiki Summer Splash arcade
+                        cab with over 13,000 games, widescreen and unbelievable stereo sound?
+                        <br>
+                        <br>
+                        A commissioned project for Kraken Rum for a competition to win a branded arcade machine hosted
+                        on the "The League of Darkness" site. Has a fully functional leaderboard with secure score
+                        transmission to a secured API backend.
+                    </p>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <h3>Project Features</h3>
+                    <ul>
+                        <li>2D Obstacle Course</li>
+                        <li>Difficult Scaling</li>
+                        <li>Leaderboard</li>
+                        <li>Bonus Items</li>
+                        <li>Cheat Detection</li>
+                        <li>Secured API</li>
+                        <li>Obfuscation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <%- include('../partials/_bootstrapJS.ejs') %>
 </body>
 
 <%- include('../partials/_footer.ejs') %>
