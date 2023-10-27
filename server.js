@@ -27,10 +27,6 @@ app.get(['/', '/index', '/index.(html|php)'], (req, res) => {
   res.render('index')
 })
 
-app.get('/projects', (req, res) => {
-  res.render('projects')
-})
-
 app.get('/projects/:id', (req, res) => {
   fs.readFile(`./views/projects/${req.params.id.toLowerCase()}.ejs`, (err, data) => {
     if (err) {
