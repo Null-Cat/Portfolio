@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon 'server.js -d'"
+    "dev": "nodemon 'server.js -d'",
+    "deploy-production": "pm2 deploy ecosystem.config.js production --force",
+    "reload-production": "pm2 deploy ecosystem.config.js production exec 'pm2 reload app'"
   },
   "repository": {
     "type": "git",
