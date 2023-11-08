@@ -13,13 +13,13 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use(LogConnections)
 
-app.all('*', (req, res, next) => {
-  var isLocal = req.socket.localAddress === req.socket.remoteAddress
-  if (!argv.dev && !req.secure && !isLocal) {
-    res.redirect(308, 'https://' + req.headers.host + req.url)
-	console.log(`${logTimestamp} ${clc.bgRed.white('308')} Upgrading connection`)
-  } else next()
-})
+// app.all('*', (req, res, next) => {
+//   var isLocal = req.socket.localAddress === req.socket.remoteAddress
+//   if (!argv.dev && !req.secure && !isLocal) {
+//     res.redirect(308, 'https://' + req.headers.host + req.url)
+// 	console.log(`${logTimestamp} ${clc.bgRed.white('308')} Upgrading connection`)
+//   } else next()
+// })
 
 app.use(express.static('public'))
 
