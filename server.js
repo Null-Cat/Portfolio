@@ -33,7 +33,12 @@ app.get('/projects/:id', (req, res) => {
       res.sendStatus(404)
       console.log(`${logTimestamp} ${clc.bgRed.white('404')} project ${clc.underline(req.params.id.toLowerCase())} does not exist`)
     } else {
-      res.render(`./projects/${req.params.id.toLowerCase()}`)
+      if (req.params.id.includes('..')) {
+        console.log(`${logTimestamp} ${clc.bgRed.white('403')} ${clc.underline(req.params.id.toLowerCase())} contains invalid characters`)
+        res.sendStatus(403)
+      } else {
+        res.render(`./projects/${req.params.id.toLowerCase()}`)
+      }
     }
   })
 })
