@@ -41,7 +41,7 @@ module.exports = {
       // SSH user
       user: 'phro',
       // SSH host
-      host: 'nullcat.tech',
+      host: 'philipwhite.dev',
       // GIT remote/branch
       ref: 'origin/main',
       // GIT remote
