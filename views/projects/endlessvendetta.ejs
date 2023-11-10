@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('../partials/_headerMeta.ejs') %>
+        <meta name="description" content="Project: Endless Vendetta, Crime, violence and betrayal runs rampant throughout the solar system. 
+            Take on bounties as you hunt to kill the one who murdered your family, and left you for dead.">
+        <title>Project: Endless Vendetta</title>
+        <link rel="stylesheet" href="/css/index.css">
+</head>
+
+<body>
+    <%- include('../partials/_navBar.ejs') %>
+
+        <div class="container">
+            <h1 class="text-center">Endless Vendetta</h1>
+            <div id="FeaturedProject" class="carousel slide" data-bs-ride="carousel">
+                <!-- Indicators/dots -->
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#FeaturedProject" data-bs-slide-to="0"
+                        class="active"></button>
+                    <button type="button" data-bs-target="#FeaturedProject" data-bs-slide-to="1"></button>
+                    <button type="button" data-bs-target="#FeaturedProject" data-bs-slide-to="2"></button>
+                    <button type="button" data-bs-target="#FeaturedProject" data-bs-slide-to="3"></button>
+                    <button type="button" data-bs-target="#FeaturedProject" data-bs-slide-to="4"></button>
+                </div>
+
+                <!-- The slideshow/carousel -->
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="/azureabyss/ScreenShot0.png" alt="Screen1" class="h-100">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/azureabyss/ScreenShot1.png" alt="Screen2" class="h-100">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/azureabyss/ScreenShot2.png" alt="Screen3" class="h-100">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/azureabyss/ScreenShot3.png" alt="Screen4" class="h-100">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/azureabyss/ScreenShot4.png" alt="Screen5" class="h-100">
+                    </div>
+                </div>
+                <!-- Left and right controls/icons -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#FeaturedProject"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#FeaturedProject"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+
+            <div class="row" style="padding-top: 25px;">
+                <div class="col-sm-12 col-md-6">
+                    <h3>Project Description</h3>
+                    <p>
+                        The game is an realistic FPS game that features both bounties that progress the main story and
+                        boast high payouts, or exploration of
+                        the world, where you can meet unique NPC's and do side activities to prepare for the next bounty
+                        or side quest that progress your relationship with your crew.
+                        <br>
+                        <br>
+                        The realism aspect of the gameplay is to do with gunplay and damage, where each combat encounter
+                        is deadly and requires smart decision making and planning to complete effectively. Guns have
+                        realistic recoil and feel heavy and brutal, as if each shot makes an impact to the world or
+                        other characters.
+                        <br>
+                        <br>
+                        Bounties are split into 3 different variations. Big, side and hits. Big bounties are main
+                        mission set pieces that feature multiple pathways and ways to play through them, once started it
+                        has to be finished. Side bounties are found in the exploration of the world and are small
+                        missions that can unlock new opportunities for big bounties, like a distraction, or less guards,
+                        an open pathway, an item etc. Hits are also found in the exploration of the open world, but are
+                        objectives located in the open world and only award experience and cash.
+                        <br>
+                        <br>
+                        The open world exploration allows the player to walk around the level and take in scenery,
+                        complete hits or side bounties, talk to unique NPC's, find secrets or trade. Unique NPC's can
+                        give side storylines, items or even be a fight the player has to go through.
+
+                    </p>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <h3>Project Features</h3>
+                    <ul>
+                        <li>First Person Shooter</li>
+                        <li>Complex Gun Play</li>
+                        <li>Bounties</li>
+                        <li>Complex Enemy AI</li>
+                        <li>Spacial Inventory</li>
+                        <li>Dialog System</li>
+                        <li>Gadgets</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <%- include('../partials/_bootstrapJS.ejs') %>
+</body>
+
+<%- include('../partials/_footer.ejs') %>
