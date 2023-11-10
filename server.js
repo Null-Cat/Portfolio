@@ -1,7 +1,6 @@
 const express = require('express')
 const fs = require('fs')
 const clc = require('cli-color')
-const argv = require('yargs')(process.argv.slice(2)).command('dev', 'Run the server in development mode').alias('dev', 'd').argv
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -12,14 +11,6 @@ app.enable('trust proxy')
 app.use(express.urlencoded({ extended: true }))
 
 app.use(LogConnections)
-
-// app.all('*', (req, res, next) => {
-//   var isLocal = req.socket.localAddress === req.socket.remoteAddress
-//   if (!argv.dev && !req.secure && !isLocal) {
-//     res.redirect(308, 'https://' + req.headers.host + req.url)
-// 	console.log(`${logTimestamp} ${clc.bgRed.white('308')} Upgrading connection`)
-//   } else next()
-// })
 
 app.use(express.static('public'))
 
@@ -57,7 +48,6 @@ function LogConnections(req, res, next) {
 }
 
 app.listen(port, () => {
-  if (argv.dev) console.log(`${clc.yellow(`Server in development mode ${clc.bold('NO SSL')}`)}`)
   console.log(`${clc.green(`Listening on port ${port}`)}`)
 })
 
