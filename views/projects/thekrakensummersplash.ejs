@@ -37,7 +37,9 @@
                         on the "The League of Darkness" site. Has a fully functional leaderboard with secure score
                         transmission to a secured API backend.
                     </p>
-                    <a class="text-secondary" href="https://www.theleagueofdarkness.co.uk/the-krakens-summer-splash">Hosted here: "The League of Darkness" site.</a>
+                    <a class="text-secondary"
+                        href="https://www.theleagueofdarkness.co.uk/the-krakens-summer-splash">Hosted here: "The League
+                        of Darkness" site.</a>
                     <p class="fs-6 fw-light"><em>*Login Required</em></p>
                 </div>
                 <div class="col-sm-12 col-md-6">
@@ -51,6 +53,45 @@
                         <li>Secured API</li>
                         <li>Obfuscation</li>
                     </ul>
+                </div>
+            </div>
+
+            <h3 class="text-center" style="padding-top: 25px;">My Contributions</h3>
+
+            <h4 class="text-center" style="padding-top: 25px;">Securing Scores & Retrieving/Sending API Data</h4>
+            <div class="row" style="padding-top: 10px;">
+                <div class="col-sm-12 col-md-6">
+                    <p>
+                        As the game was hosted on a public facing website and that there is a high value reward for
+                        getting the top scores in this game, I had to ensure that the scores were not manipulated in any
+                        way during the competition however due to the nature of public facing websites all scripts are
+                        publicly available so I had to use multiple methodologies to slow any perpetrators down before
+                        the competition ends.
+                        <br>
+                        <br>
+                        I did this by using a combination of obfuscation and encryption techniques to ensure that the
+                        scores were
+                        secure at the time of the competition. One of the techniques that was implemented was done by
+                        storing the scores in multiple variables
+                        obfuscating the names and functions that check the scores as you pass through each tunnel. I
+                        also used a obfuscating tool called "Javascript Obfuscator" to obfuscate the code further by
+                        including the whole game script. I also used a encryption technique using AES to encrypt the
+                        scores set by
+                        Kraken Rum's hosts of the game, this was done by using a encryption key and salt that was
+                        provided
+                        by the hosts and encrypting the scores then sending the encrypted scores to the API endpoint
+                        provided, in
+                        the form of a POST request as stated by the API documentation.
+                    </p>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="d-flex flex-column">
+                        <img src="/kraken/KrakenSnippet0.png" alt="Kraken Snippet" class="w-100">
+                        <img src="/kraken/KrakenSnippet1.png" alt="Kraken Snippet" class="w-100"
+                            style="padding-top: 5px;">
+                        <img src="/kraken/KrakenSnippet2.png" alt="Kraken Snippet" class="w-100"
+                            style="padding-top: 5px;">
+                    </div>
                 </div>
             </div>
         </div>
