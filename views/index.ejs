@@ -12,8 +12,7 @@
 <body>
     <%- include('./partials/_navBar.ejs') %>
 
-        <header>
-            <!-- Creates the transparent black overlay -->
+        <div id="headerVideo">
             <div class="overlay"></div>
             <video class="w-100" autoplay loop muted>
                 <source src="/azureabysstrailer.mp4" type="video/mp4" />
@@ -30,7 +29,7 @@
                     </div>
                 </div>
             </div>
-        </header>
+        </div>
 
         <div class="container">
             <h1 class="text-center" id="About" style="padding: 25px;">Welcome to My Portfolio</h1>
@@ -51,36 +50,38 @@
                 <h5 class="text-center">Languages</h5>
                 <div class="d-flex justify-content-center flex-wrap" style="gap: 5px;">
                     <div id="lang" data-bs-toggle="tooltip" data-bs-title="C++">
-                        <a>2+ Years</a>
+                        <h6>2+ Years</h6>
                         <img src="https://skillicons.dev/icons?i=cpp&theme=dark" />
                     </div>
                     <div id="lang" data-bs-toggle="tooltip" data-bs-title="C#">
-                        <a>3+ Years</a>
+                        <h6>3+ Years</h6>
                         <img src="https://skillicons.dev/icons?i=cs&theme=dark" />
                     </div>
                     <div id="lang" data-bs-toggle="tooltip" data-bs-title="JavaScript">
-                        <a>5+ Years</a>
+                        <h6>5+ Years</h6>
                         <img src="https://skillicons.dev/icons?i=js&theme=dark" />
                     </div>
                     <div id="lang" data-bs-toggle="tooltip" data-bs-title="Python">
-                        <a>3+ Years</a>
+                        <h6>3+ Years</h6>
                         <img src="https://skillicons.dev/icons?i=py&theme=dark" />
                     </div>
                     <div id="lang" data-bs-toggle="tooltip" data-bs-title="Lua">
-                        <a>2+ Years</a>
+                        <h6>2+ Years</h6>
                         <img src="https://skillicons.dev/icons?i=lua&theme=dark" />
                     </div>
                     <div id="lang" data-bs-toggle="tooltip" data-bs-title="Java">
-                        <a>2+ Years</a>
+                        <h6>2+ Years</h6>
                         <img src="https://skillicons.dev/icons?i=java&theme=dark" />
                     </div>
                 </div>
                 <h5 class="text-center" style="padding-top: 25px;">Game Engines</h5>
                 <div class="d-flex justify-content-center flex-wrap" style="gap: 5px;">
-                    <div id="software" data-bs-toggle="tooltip" data-bs-title="Unreal Engine 5">
+                    <div class="d-flex align-items-center" id="software" data-bs-toggle="tooltip" data-bs-title="Unreal Engine 5">
+                        <h6>3+ Years</h6>
                         <img src="https://skillicons.dev/icons?i=unreal&theme=dark" style="width: 65px;" />
                     </div>
-                    <div id="software" data-bs-toggle="tooltip" data-bs-title="Unity">
+                    <div class="d-flex align-items-center" id="software" data-bs-toggle="tooltip" data-bs-title="Unity">
+                        <h6>2+ Years</h6>
                         <img src="https://skillicons.dev/icons?i=unity&theme=dark" style="width: 65px;" />
                     </div>
                 </div>
