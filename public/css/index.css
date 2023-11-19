@@ -22,7 +22,7 @@ footer {
     --bs-dropdown-link-hover-bg: #1f1f1f;
 }
 
-header {
+#headerVideo {
     position: relative;
     background-color: black;
     height: 75vh;
@@ -31,7 +31,13 @@ header {
     overflow: hidden;
 }
 
-header video {
+@media only screen and (max-width: 700px) {
+    #headerVideo {
+        height: 45vh;
+    }
+}
+
+#headerVideo video {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -46,12 +52,12 @@ header video {
     transform: translateX(-50%) translateY(-50%);
 }
 
-header .container {
+#headerVideo .container {
     position: relative;
     z-index: 2;
 }
 
-header .overlay {
+#headerVideo .overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -65,11 +71,11 @@ header .overlay {
 /* This will use a fallback image instead of a video for devices that commonly do not support the HTML5 video element */
 
 @media (pointer: coarse) and (hover: none) {
-    header {
+    #headerVideo {
         background: url(/azureabyss/banner.png) black no-repeat center center scroll;
     }
 
-    header video {
+    #headerVideo video {
         display: none;
     }
 }
