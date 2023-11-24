@@ -48,7 +48,7 @@ function LogConnections(req, res, next) {
 }
 
 app.listen(port, () => {
-  console.log(`${clc.green(`Listening on port ${port}`)}`)
+  console.log(`${clc.green(`${logTimestamp} Listening on port ${port}`)}`)
 })
 
 var date = new Date(),
