@@ -13,11 +13,11 @@ module.exports = {
       // If use static website, remove it
       //args: 'one two',
       // Current directory on server
-      cwd: '/var/www/production/current',
+      cwd: '/var/www/portfolio/current',
       // Config out file for web errors
-      error_file: '/var/www/production/logs/web.err.log',
+      error_file: '/var/www/portfolio/logs/web.err.log',
       // Config out file for web logs
-      out_file: '/var/www/production/logs/web.out.log',
+      out_file: '/var/www/portfolio/logs/web.out.log',
       // Number of instances to be started in cluster mode
       instances: 1,
       // Enable or disable auto restart after process failure
@@ -42,6 +42,8 @@ module.exports = {
       user: 'phro',
       // SSH host
       host: 'philipwhite.dev',
+      // SSH port
+      port: '2222',
       // GIT remote/branch
       ref: 'origin/main',
       // GIT remote
@@ -49,8 +51,8 @@ module.exports = {
       // Fetch all branches or fast
       fetch: 'all',
       // Path in the server
-      path: '/var/www/production',
-      'post-setup': "ls -la",
+      path: '/var/www/portfolio',
+      'post-setup': 'ls -la',
       // Command run after pull source code
       'post-deploy': 'npm install && pm2 reload ecosystem.config.js --env production'
     }
