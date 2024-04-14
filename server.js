@@ -1,6 +1,20 @@
+require('dotenv').config()
 const express = require('express')
 const fs = require('fs')
 const clc = require('cli-color')
+const nodemailer = require('nodemailer')
+let nodeMailerTransporter = nodemailer.createTransport({
+  host: 'mail.spacemail.com',
+  port: 465,
+  secure: true,
+  auth: {
+    user: 'philip@philipwhite.dev',
+    pass: process.env.SMTP_Password
+  },
+  tls: {
+    rejectUnauthorized: false
+  }
+})
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -30,6 +44,41 @@ app.get('/projects/:id', (req, res) => {
       } else {
         res.render(`./projects/${req.params.id.toLowerCase()}`)
       }
+    }
+  })
+})
+
+app.post('/api/contact', express.json(), (req, res) => {
+  console.log(
+    `${logTimestamp} ${clc.inverse('POST')} request to send message from ${clc.cyan(req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.socket.remoteAddress)}`
+  )
+  if (!(req.body.name && req.body.email && req.body.subject && req.body.message)) {
+    res.sendStatus(400)
+    return
+  }
+
+  let email = {
+    from: `${req.body.name} <philip@philipwhite.dev>`,
+    to: 'philip@philipwhite.dev',
+    subject: `Portfolio Message: ${req.body.subject}`,
+    text: `Name: ${req.body.name}\nEmail: ${req.body.email}\nMessage:\n${req.body.message}`
+  }
+
+  nodeMailerTransporter.sendMail(email, (err) => {
+    if (err) {
+      console.log(
+        `${logTimestamp} ${clc.bgRed.white('500')} failed to send message for ${req.body.name} ${clc.cyan(
+          req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.socket.remoteAddress
+        )}`
+      )
+      res.sendStatus(500)
+    } else {
+      console.log(
+        `${logTimestamp} ${clc.bgGreen.white('200')} message sent successfully for ${req.body.name} ${clc.cyan(
+          req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.socket.remoteAddress
+        )}`
+      )
+      res.sendStatus(200)
     }
   })
 })

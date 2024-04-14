@@ -54,7 +54,7 @@
                 upcoming third-year project Vendetta.</p>
 
             <h1 class="text-center" style="padding-top: 25px;" id="Skills">Skills</h1>
-            <div class="skills">
+            <div class="skills" style="padding-bottom: 25px;">
                 <h5 class="text-center">Languages</h5>
                 <div class="d-flex justify-content-center flex-wrap" style="gap: 5px;">
                     <div id="lang" data-bs-toggle="tooltip" data-bs-title="C++">
@@ -160,7 +160,7 @@
 
         <div class="container" style="padding-bottom: 25px;">
             <h1 class="text-center" style="padding: 25px;" id="Projects">Projects</h1>
-            <div class="d-flex justify-content-center flex-wrap" style="gap: 25px;">
+            <div class="d-flex justify-content-center flex-wrap" style="gap: 25px; padding-bottom: 25px;">
                 <div class="card bg-dark text-white" id="projectCard" style="width:400px;">
                     <img class="card-img-top" src="/vendetta/cover_page.png" alt="Card image"
                         style="width:100%; height:316px;">
@@ -268,8 +268,55 @@
                 </div>
             </div>
 
-
             <h1 class="text-center" style="padding: 25px;" id="Contact">Contact Me</h1>
+
+            <form class="needs-validation" id="contactForm" data-bs-theme="dark" style="padding-bottom: 25px;"
+                novalidate>
+                <fieldset id="contactFieldset">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="nameInput" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="nameInput" name="name" placeholder="Name"
+                                required>
+                            <div class="invalid-feedback">
+                                Please enter your name
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="emailInput" class="form-label">Email</label>
+                            <div class="input-group has-vaildation">
+                                <span class="input-group-text" id="inputEmailPrepend"><i
+                                        class="fa-solid fa-envelope"></i></span>
+                                <input type="email" class="form-control" id="emailInput" name="email"
+                                    placeholder="example@example.com" required>
+                                <div class="invalid-feedback">
+                                    Please enter a valid email address
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <label for="subjectInput" class="form-label">Subject</label>
+                            <input type="text" class="form-control" id="subjectInput" name="subject"
+                                placeholder="Subject" required>
+                            <div class="invalid-feedback">
+                                Please enter a subject
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <label for="msgArea" class="form-label">Message</label>
+                            <textarea class="form-control" id="msgArea" name="message" rows="5" placeholder="Message"
+                                required></textarea>
+                            <div class="invalid-feedback">
+                                Please enter a message
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary w-100" id="sendContactButton">Send</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+
             <div class="sm d-flex justify-content-center">
                 <a href="https://twitter.com/Null_Cat_0"><i class="fab fa-twitter"></i></a>
                 <a href="https://www.linkedin.com/in/philip-white-dev/"><i class="fab fa-linkedin-in"></i></a>
@@ -281,9 +328,15 @@
                     </svg></a>
                 <a href="mailto:philip@philipwhite.dev"><i class="fa-solid fa-envelope"></i></a>
             </div>
+            <div class="d-flex justify-content-center">
+                <span style="padding-right: 8px;"><a style="color: white;" href="mailto:philip@philipwhite.dev"><i
+                            class="fa-solid fa-envelope"></i></a></span>
+                <a href="mailto:philip@philipwhite.dev" style="color: white;">philip@philipwhite.dev</a>
+            </div>
         </div>
 
         <script src="/js/scrollTo.js"></script>
+        <script src="/js/contactSend.js" defer></script>
         <%- include('./partials/_bootstrapJS.ejs') %>
 </body>
 

@@ -105,7 +105,7 @@ footer {
     height: 100px;
     line-height: 100px;
     text-align: center;
-    color: #0084ff;
+    color: #0d6efd;
     margin: 0 16px;
     transition: .4s linear;
     position: relative;
@@ -137,4 +137,8 @@ footer {
     border-top: 4px solid;
     border-bottom: 4px solid;
     transform: skewY(-20deg);
+}
+
+.form-control {
+    background-color: #181818 !important;
 }
