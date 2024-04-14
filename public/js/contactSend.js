@@ -15,6 +15,9 @@ function formSubmitContact(event) {
     if (request.readyState === 4 && request.status === 200) {
       sendContactButton.setAttribute('class', 'btn btn-success w-100')
       sendContactButton.innerHTML = '<span><i class="fa-solid fa-check"></i></span> Message sent successfully<br>Thank you for reaching out!'
+    } else if (request.status === 413) {
+      sendContactButton.innerHTML = '<span><i class="fa-solid fa-triangle-exclamation"></i></span> Message too long<br>Ensure your message is less than 1000 characters'
+      sendContactButton.setAttribute('class', 'btn btn-danger w-100')
     } else {
       sendContactButton.innerHTML = '<span><i class="fa-solid fa-triangle-exclamation"></i></span> Failed to send message<br>Try again later or email me directly at philip@philipwhite.dev'
       sendContactButton.setAttribute('class', 'btn btn-danger w-100')

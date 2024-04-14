@@ -277,7 +277,7 @@
                         <div class="col-md-6">
                             <label for="nameInput" class="form-label">Name</label>
                             <input type="text" class="form-control" id="nameInput" name="name" placeholder="Name"
-                                required>
+                                maxlength="100" required>
                             <div class="invalid-feedback">
                                 Please enter your name
                             </div>
@@ -288,7 +288,7 @@
                                 <span class="input-group-text" id="inputEmailPrepend"><i
                                         class="fa-solid fa-envelope"></i></span>
                                 <input type="email" class="form-control" id="emailInput" name="email"
-                                    placeholder="example@example.com" required>
+                                    placeholder="example@example.com" maxlength="100" required>
                                 <div class="invalid-feedback">
                                     Please enter a valid email address
                                 </div>
@@ -297,15 +297,15 @@
                         <div class="col-12">
                             <label for="subjectInput" class="form-label">Subject</label>
                             <input type="text" class="form-control" id="subjectInput" name="subject"
-                                placeholder="Subject" required>
+                                placeholder="Subject" maxlength="100" required>
                             <div class="invalid-feedback">
                                 Please enter a subject
                             </div>
                         </div>
                         <div class="col-12">
                             <label for="msgArea" class="form-label">Message</label>
-                            <textarea class="form-control" id="msgArea" name="message" rows="5" placeholder="Message"
-                                required></textarea>
+                            <textarea class="form-control" id="msgArea" name="message" rows="6" placeholder="Message"
+                                maxlength="1000" required></textarea>
                             <div class="invalid-feedback">
                                 Please enter a message
                             </div>

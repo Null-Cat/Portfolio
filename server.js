@@ -57,6 +57,11 @@ app.post('/api/contact', express.json(), (req, res) => {
     return
   }
 
+  if (req.body.name.length > 100 || req.body.email.length > 100 || req.body.subject.length > 100 || req.body.message.length > 1000) {
+    res.sendStatus(413)
+    return
+  }
+
   let email = {
     from: `${req.body.name} <philip@philipwhite.dev>`,
     to: 'philip@philipwhite.dev',
@@ -69,7 +74,7 @@ app.post('/api/contact', express.json(), (req, res) => {
       console.log(
         `${logTimestamp} ${clc.bgRed.white('500')} failed to send message for ${req.body.name} ${clc.cyan(
           req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.socket.remoteAddress
-        )}`
+        )} - ${err}`
       )
       res.sendStatus(500)
     } else {
