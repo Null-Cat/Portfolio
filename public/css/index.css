@@ -142,3 +142,7 @@ footer {
 .form-control {
     background-color: #181818 !important;
 }
+
+#projectCard>div>a.card-title.h4 {
+    text-decoration: none !important;
+}
