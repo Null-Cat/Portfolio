@@ -9,6 +9,10 @@ function formSubmitContact(event) {
   contactFormData['message'] = document.querySelector('#msgArea').value
   document.getElementById('contactFieldset').disabled = true
   sendContactButton.innerHTML = '<span class="spinner-border spinner-border-sm" aria-hidden="true"></span>'
+  if (contactFormData['xr'] !== '') {
+    console.error('Form Error')
+    return
+  }
   let request = new XMLHttpRequest()
   request.open('POST', '/api/contact', true)
   request.onload = function () {

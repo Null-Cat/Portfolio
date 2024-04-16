@@ -52,6 +52,17 @@ app.post('/api/contact', express.json(), (req, res) => {
   console.log(
     `${logTimestamp} ${clc.inverse('POST')} request to send message from ${clc.cyan(req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.socket.remoteAddress)}`
   )
+
+  if (req.body.xr) {
+    console.log(
+      `${logTimestamp} ${clc.bgRed.white('403')} bot detected for ${req.body.name} ${clc.cyan(
+        req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.socket.remoteAddress
+      )}`
+    )
+    res.sendStatus(403)
+    return
+  }
+
   if (!(req.body.name && req.body.email && req.body.subject && req.body.message)) {
     res.sendStatus(400)
     return
