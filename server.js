@@ -36,10 +36,10 @@ app.get('/projects/:id', (req, res) => {
   fs.readFile(`./views/projects/${req.params.id.toLowerCase()}.ejs`, (err, data) => {
     if (err) {
       res.sendStatus(404)
-      console.log(`${logTimestamp} ${clc.bgRed.white('404')} project ${clc.underline(req.params.id.toLowerCase())} does not exist`)
+      console.log(`${getLogTimestamp()} ${clc.bgRed.white('404')} project ${clc.underline(req.params.id.toLowerCase())} does not exist`)
     } else {
       if (req.params.id.includes('..')) {
-        console.log(`${logTimestamp} ${clc.bgRed.white('403')} ${clc.underline(req.params.id.toLowerCase())} contains invalid characters`)
+        console.log(`${getLogTimestamp()} ${clc.bgRed.white('403')} ${clc.underline(req.params.id.toLowerCase())} contains invalid characters`)
         res.sendStatus(403)
       } else {
         res.render(`./projects/${req.params.id.toLowerCase()}`)
@@ -50,12 +50,12 @@ app.get('/projects/:id', (req, res) => {
 
 app.post('/api/contact', express.json(), (req, res) => {
   console.log(
-    `${logTimestamp} ${clc.inverse('POST')} request to send message from ${clc.cyan(req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.socket.remoteAddress)}`
+    `${getLogTimestamp()} ${clc.inverse('POST')} request to send message from ${clc.cyan(req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.socket.remoteAddress)}`
   )
 
   if (req.body.xr) {
     console.log(
-      `${logTimestamp} ${clc.bgRed.white('403')} bot detected for ${req.body.name} ${clc.cyan(
+      `${getLogTimestamp()} ${clc.bgRed.white('403')} bot detected for ${req.body.name} ${clc.cyan(
         req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.socket.remoteAddress
       )}`
     )
@@ -83,14 +83,14 @@ app.post('/api/contact', express.json(), (req, res) => {
   nodeMailerTransporter.sendMail(email, (err) => {
     if (err) {
       console.log(
-        `${logTimestamp} ${clc.bgRed.white('500')} failed to send message for ${req.body.name} ${clc.cyan(
+        `${getLogTimestamp()} ${clc.bgRed.white('500')} failed to send message for ${req.body.name} ${clc.cyan(
           req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.socket.remoteAddress
         )} - ${err}`
       )
       res.sendStatus(500)
     } else {
       console.log(
-        `${logTimestamp} ${clc.bgGreen.white('200')} message sent successfully for ${req.body.name} ${clc.cyan(
+        `${getLogTimestamp()} ${clc.bgGreen.white('200')} message sent successfully for ${req.body.name} ${clc.cyan(
           req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.socket.remoteAddress
         )}`
       )
@@ -105,7 +105,7 @@ app.all('*', (req, res) => {
 
 function LogConnections(req, res, next) {
   console.log(
-    `${logTimestamp} ${clc.inverse(req.method)} request for ${clc.underline(req.url)} from ${clc.cyan(
+    `${getLogTimestamp()} ${clc.inverse(req.method)} request for ${clc.underline(req.url)} from ${clc.cyan(
       req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.socket.remoteAddress
     )}`
   )
@@ -113,11 +113,12 @@ function LogConnections(req, res, next) {
 }
 
 app.listen(port, () => {
-  console.log(`${clc.green(`${logTimestamp} Listening on port ${port}`)}`)
+  console.log(`${clc.green(`${getLogTimestamp()} Listening on port ${port}`)}`)
 })
 
-var date = new Date(),
-  logTimestamp =
+function getLogTimestamp() {
+  let date = new Date()
+  let timeStamp =
     ('00' + (date.getMonth() + 1)).slice(-2) +
     '/' +
     ('00' + date.getDate()).slice(-2) +
@@ -129,3 +130,5 @@ var date = new Date(),
     ('00' + date.getMinutes()).slice(-2) +
     ':' +
     ('00' + date.getSeconds()).slice(-2)
+  return timeStamp
+}
