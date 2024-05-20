@@ -212,6 +212,8 @@
                         <li>First Person Shooter</li>
                         <li>Complex Gun Play</li>
                         <li>Weapon Attachments</li>
+                        <li>Open World</li>
+                        <li>Mantling System</li>
                         <li>Bounties</li>
                         <li>Enemy AI</li>
                         <li>Spatial Inventory</li>
@@ -239,16 +241,164 @@
 
             <h3 class="text-center" style="padding-top: 25px;">My Contributions</h3>
 
-            <h4 class="text-center" style="padding-top: 25px;">Systems</h4>
-            <div class="d-flex justify-content-center flex-column" style="padding-top: 10px;">
-                <!-- <img src="/azureabyss/CombatSnippet0.png" alt="Combat Snippet" class="w-100"> -->
-                <p style="padding-top: 10px;">
-                    A 3rd year university project in unreal engine 5 as a co-lead programmer set to design and develop
-                    complex enemy and companion AI using behavior trees, a dynamic spatial inventory that can resize
-                    during run-time and complex dialogue system that can trigger custom events and can scale to large
-                    dialogue paths all in C++. As this is still a work in progress, I cannot show any of the code or
-                    assets, as they are not final and are subject to change.
-                </p>
+            <h4 class="text-center" style="padding-top: 25px;">Dialog System</h4>
+            <div class="row" style="padding-top: 10px;">
+                <div class="col-sm-12 col-md-6">
+                    <p>
+                        The dialog system was designed to be designer friendly first. The system conforms
+                        to this by allowing the designer to create dialogue trees
+                        through a modified plugin called <a href="https://github.com/jinyuliao/GenericGraph">Generic
+                            Graph</a> by jinyuliao. This allows a designer to create a dialog tree through a graph which
+                        is immensely easier to understand and work with programmatically entering the tree.
+                        <br>
+                        <br>
+                    </p>
+                    <div class="d-flex flex-column">
+                        <img src="/endlessvendetta/Dialogue3.png" alt="Dialog Snippet" class="w-100">
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="d-flex flex-column">
+                        <img src="/endlessvendetta/Dialogue2.png" alt="Dialog Snippet" class="w-100">
+                        <img src="/endlessvendetta/Dialogue1.png" alt="Dialog Snippet" class="w-100"
+                            style="padding-top: 5px;">
+                    </div>
+                </div>
+            </div>
+
+            <h4 class="text-center" style="padding-top: 25px;">Enemy AI</h4>
+            <div class="row" style="padding-top: 10px;">
+                <div class="col-sm-12 col-md-6">
+                    <p>
+                        The dialog system was designed to be designer friendly first. The system conforms
+                        to this by allowing the designer to create dialogue trees
+                        through blueprints in any Character blueprint as long as it has the dialog actor component
+                        attached. This makes the system modular and able to be applied to any character or situation.
+                        To build the dialog tree within a character's blueprint the BlueprintCallable attribute was used
+                        on the functions that are used to build the dialog tree.
+                        <br>
+                        <br>
+                        The system also allows for the designer to create
+                        custom events that can be called from the dialog tree this is done by defining special codes
+                        hidden in the dialogue but read by the system triggering different events such as calling custom
+                        blueprint functions, adding items to the players inventory and setting quest flags.
+                    </p>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="d-flex flex-column">
+                        <img src="/azureabyss/DialogueSnippet0.png" alt="Dialog Snippet" class="w-100">
+                        <img src="/azureabyss/DialogueSnippet1.png" alt="Dialog Snippet" class="w-100"
+                            style="padding-top: 5px;">
+                    </div>
+                </div>
+            </div>
+
+            <h4 class="text-center" style="padding-top: 25px;">Spacial Inventory</h4>
+            <div class="row" style="padding-top: 10px;">
+                <div class="col-sm-12 col-md-6">
+                    <p>
+                        The dialog system was designed to be designer friendly first. The system conforms
+                        to this by allowing the designer to create dialogue trees
+                        through blueprints in any Character blueprint as long as it has the dialog actor component
+                        attached. This makes the system modular and able to be applied to any character or situation.
+                        To build the dialog tree within a character's blueprint the BlueprintCallable attribute was used
+                        on the functions that are used to build the dialog tree.
+                        <br>
+                        <br>
+                        The system also allows for the designer to create
+                        custom events that can be called from the dialog tree this is done by defining special codes
+                        hidden in the dialogue but read by the system triggering different events such as calling custom
+                        blueprint functions, adding items to the players inventory and setting quest flags.
+                    </p>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="d-flex flex-column">
+                        <img src="/azureabyss/DialogueSnippet0.png" alt="Dialog Snippet" class="w-100">
+                        <img src="/azureabyss/DialogueSnippet1.png" alt="Dialog Snippet" class="w-100"
+                            style="padding-top: 5px;">
+                    </div>
+                </div>
+            </div>
+
+            <h4 class="text-center" style="padding-top: 25px;">First Person Animations</h4>
+            <div class="row" style="padding-top: 10px;">
+                <div class="col-sm-12 col-md-6">
+                    <p>
+                        The dialog system was designed to be designer friendly first. The system conforms
+                        to this by allowing the designer to create dialogue trees
+                        through blueprints in any Character blueprint as long as it has the dialog actor component
+                        attached. This makes the system modular and able to be applied to any character or situation.
+                        To build the dialog tree within a character's blueprint the BlueprintCallable attribute was used
+                        on the functions that are used to build the dialog tree.
+                        <br>
+                        <br>
+                        The system also allows for the designer to create
+                        custom events that can be called from the dialog tree this is done by defining special codes
+                        hidden in the dialogue but read by the system triggering different events such as calling custom
+                        blueprint functions, adding items to the players inventory and setting quest flags.
+                    </p>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="d-flex flex-column">
+                        <img src="/azureabyss/DialogueSnippet0.png" alt="Dialog Snippet" class="w-100">
+                        <img src="/azureabyss/DialogueSnippet1.png" alt="Dialog Snippet" class="w-100"
+                            style="padding-top: 5px;">
+                    </div>
+                </div>
+            </div>
+
+            <h4 class="text-center" style="padding-top: 25px;">UI Programming</h4>
+            <div class="row" style="padding-top: 10px;">
+                <div class="col-sm-12 col-md-6">
+                    <p>
+                        The dialog system was designed to be designer friendly first. The system conforms
+                        to this by allowing the designer to create dialogue trees
+                        through blueprints in any Character blueprint as long as it has the dialog actor component
+                        attached. This makes the system modular and able to be applied to any character or situation.
+                        To build the dialog tree within a character's blueprint the BlueprintCallable attribute was used
+                        on the functions that are used to build the dialog tree.
+                        <br>
+                        <br>
+                        The system also allows for the designer to create
+                        custom events that can be called from the dialog tree this is done by defining special codes
+                        hidden in the dialogue but read by the system triggering different events such as calling custom
+                        blueprint functions, adding items to the players inventory and setting quest flags.
+                    </p>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="d-flex flex-column">
+                        <img src="/azureabyss/DialogueSnippet0.png" alt="Dialog Snippet" class="w-100">
+                        <img src="/azureabyss/DialogueSnippet1.png" alt="Dialog Snippet" class="w-100"
+                            style="padding-top: 5px;">
+                    </div>
+                </div>
+            </div>
+
+            <h4 class="text-center" style="padding-top: 25px;">Movement System</h4>
+            <div class="row" style="padding-top: 10px;">
+                <div class="col-sm-12 col-md-6">
+                    <p>
+                        The dialog system was designed to be designer friendly first. The system conforms
+                        to this by allowing the designer to create dialogue trees
+                        through blueprints in any Character blueprint as long as it has the dialog actor component
+                        attached. This makes the system modular and able to be applied to any character or situation.
+                        To build the dialog tree within a character's blueprint the BlueprintCallable attribute was used
+                        on the functions that are used to build the dialog tree.
+                        <br>
+                        <br>
+                        The system also allows for the designer to create
+                        custom events that can be called from the dialog tree this is done by defining special codes
+                        hidden in the dialogue but read by the system triggering different events such as calling custom
+                        blueprint functions, adding items to the players inventory and setting quest flags.
+                    </p>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="d-flex flex-column">
+                        <img src="/azureabyss/DialogueSnippet0.png" alt="Dialog Snippet" class="w-100">
+                        <img src="/azureabyss/DialogueSnippet1.png" alt="Dialog Snippet" class="w-100"
+                            style="padding-top: 5px;">
+                    </div>
+                </div>
             </div>
 
         </div>
