@@ -72,7 +72,7 @@ footer {
 
 @media (pointer: coarse) and (hover: none) {
     #headerVideo {
-        background: url(/azureabyss/banner.png) black no-repeat center center scroll;
+        background: url(/endlessvendetta/EndlessVendettaFullPage.webp) black no-repeat center center scroll;
     }
 
     #headerVideo video {
