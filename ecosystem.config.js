@@ -43,18 +43,18 @@ module.exports = {
       // SSH host
       host: 'philipwhite.dev',
       // SSH port
-      //port: '2222',
+      port: '2222',
       // GIT remote/branch
       ref: 'origin/main',
       // GIT remote
-      repo: 'https://github.com/Null-Cat/Portfolio.git',
+      repo: 'git@github.com:Null-Cat/Portfolio.git',
       // Fetch all branches or fast
       fetch: 'all',
       // Path in the server
       path: '/var/www/portfolio',
       'post-setup': 'ls -la',
       // Command run after pull source code
-      'post-deploy': 'npm install && pm2 reload ecosystem.config.js --env production'
+      'post-deploy': 'sudo npm install && sudo pm2 reload ecosystem.config.js --env production'
     }
   }
 }
