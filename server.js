@@ -8,6 +8,7 @@ const clc = require('cli-color')
 const nodemailer = require('nodemailer')
 const { randomUUID } = require('crypto')
 const axios = require('axios')
+
 let nodeMailerTransporter = nodemailer.createTransport({
   host: 'mail.spacemail.com',
   port: 465,
@@ -41,6 +42,7 @@ app.use(LogConnections)
 app.use(express.static('public'))
 app.use(cookieParser())
 
+// Middleware to log connection data to the database and set a session cookie to track returning visitors
 app.use((req, res, next) => {
   if (!(req.path == '/' || req.path.includes('/projects/'))) {
     next()
@@ -91,10 +93,12 @@ app.use((req, res, next) => {
   next()
 })
 
+// Render the index page for the root URL
 app.get(['/', '/index', '/index.(html|php)'], (req, res) => {
   res.render('index')
 })
 
+// Render the requested project page if it exists
 app.get('/projects/:id', (req, res) => {
   fs.readFile(`./views/projects/${req.params.id.toLowerCase()}.ejs`, (err, data) => {
     if (err) {
@@ -111,6 +115,7 @@ app.get('/projects/:id', (req, res) => {
   })
 })
 
+// API endpoint to send messages from the contact form
 app.post('/api/contact', express.json(), (req, res) => {
   console.log(`${getLogTimestamp()} ${clc.inverse('POST')} request to send message from ${clc.cyan(getTrueIP(req))}`)
 
@@ -148,27 +153,51 @@ app.post('/api/contact', express.json(), (req, res) => {
   })
 })
 
+// 404 any other requests
 app.all('*', (req, res) => {
   res.sendStatus(404)
 })
 
+/**
+ * Middleware function to log incoming connections.
+ *
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @param {Function} next - The next middleware function.
+ */
 function LogConnections(req, res, next) {
   console.log(`${getLogTimestamp()} ${clc.inverse(req.method)} request for ${clc.underline(req.url)} from ${clc.cyan(getTrueIP(req))}`)
   next()
 }
 
+// Server start
 app.listen(port, () => {
   console.log(`${clc.green(`${getLogTimestamp()} Listening on port ${port}`)}`)
 })
 
+/**
+ * Retrieves the true IP address from the request object.
+ * @param {Object} req - The request object.
+ * @returns {string} The true IP address.
+ */
 function getTrueIP(req) {
   return req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.socket.remoteAddress.replace('::ffff:', '')
 }
 
+/**
+ * Capitalizes the first letter of a string.
+ *
+ * @param {string} string - The input string.
+ * @returns {string} The input string with the first letter capitalized.
+ */
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
+/**
+ * Returns a formatted timestamp for logging purposes.
+ * @returns {string} The formatted timestamp in the format MM/DD/YYYY:HH:MM:SS.
+ */
 function getLogTimestamp() {
   let date = new Date()
   let timeStamp =
