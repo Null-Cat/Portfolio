@@ -72,7 +72,7 @@ app.use((req, res, next) => {
             req.headers['user-agent'],
             uaParser(req.headers['user-agent']).browser.name,
             uaParser(req.headers['user-agent']).os.name,
-            uaParser(req.headers['user-agent']).device.type ? uaParser(req.headers['user-agent']).device.type : 'Desktop',
+            uaParser(req.headers['user-agent']).device.type ? capitalizeFirstLetter(uaParser(req.headers['user-agent']).device.type) : 'Desktop',
             req.headers['referer'] ? req.headers['referer'] : null,
             ipGeolocationData.countryName == '-' ? null : ipGeolocationData.latitude,
             ipGeolocationData.countryName == '-' ? null : ipGeolocationData.longitude,
@@ -163,6 +163,10 @@ app.listen(port, () => {
 
 function getTrueIP(req) {
   return req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.socket.remoteAddress.replace('::ffff:', '')
+}
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
 function getLogTimestamp() {
