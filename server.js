@@ -1,7 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const cookieParser = require('cookie-parser')
-const uaParser = require('ua-parser-js')
+const userAgentParser = require('ua-parser-js')
 const fs = require('fs')
 const mariadb = require('mariadb')
 const clc = require('cli-color')
@@ -70,10 +70,10 @@ app.use((req, res, next) => {
             req.path,
             getTrueIP(req),
             req.headers['user-agent'],
-            uaParser(req.headers['user-agent']).browser.name,
-            uaParser(req.headers['user-agent']).os.name,
-            uaParser(req.headers['user-agent']).device.type ? capitalizeFirstLetter(uaParser(req.headers['user-agent']).device.type) : 'Desktop',
-            req.headers['referer'] ? `${new URL(req.headers['referer']).host}${new URL(req.headers['referer']).pathname}` : null,
+            userAgentParser(req.headers['user-agent']).browser.name,
+            userAgentParser(req.headers['user-agent']).os.name,
+            userAgentParser(req.headers['user-agent']).device.type ? capitalizeFirstLetter(userAgentParser(req.headers['user-agent']).device.type) : 'Desktop',
+            req.headers['referer'] && new URL(req.headers['referer']).host != 'philipwhite.dev' ? `${new URL(req.headers['referer']).host}${new URL(req.headers['referer']).pathname}` : null,
             ipGeolocationData.countryName == '-' ? null : ipGeolocationData.latitude,
             ipGeolocationData.countryName == '-' ? null : ipGeolocationData.longitude,
             ipGeolocationData.countryName == '-' ? null : ipGeolocationData.countryName,
