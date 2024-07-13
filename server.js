@@ -6,6 +6,7 @@ const mariadb = require('mariadb')
 const clc = require('cli-color')
 const nodemailer = require('nodemailer')
 const { randomUUID } = require('crypto')
+const axios = require('axios')
 let nodeMailerTransporter = nodemailer.createTransport({
   host: 'mail.spacemail.com',
   port: 465,
@@ -40,47 +41,53 @@ app.use(express.static('public'))
 app.use(cookieParser())
 
 app.use((req, res, next) => {
+  if (!(req.path == '/' || req.path.includes('/projects/'))) {
+    next()
+    return
+  }
+
   let sessionID = req.cookies.session_id
   if (sessionID) {
     res.cookie('session_id', sessionID, { maxAge: 44444444444, httpOnly: true, overwrite: true })
     console.log(`${getLogTimestamp()} Returning visitor with session cookie ${sessionID}`)
-    pool.getConnection().then((conn) => {
-      conn
-        .query('INSERT INTO connection_log VALUES (UUID(), ?, ?, INET6_ATON(?), ?, ?, ?, ?, ?, DEFAULT)', [
-          sessionID,
-          req.path,
-          getTrueIP(req),
-          req.headers['user-agent'],
-          getBrowserFromUA(req.headers['user-agent']),
-          getOSFromUA(req.headers['user-agent']),
-          getDeviceFromUA(req.headers['user-agent']),
-          req.headers['referer'] ? req.headers['referer'] : null
-        ])
-        .then(() => {
-          conn.release()
-        })
-    })
   } else {
     let newSessionID = randomUUID()
     res.cookie('session_id', newSessionID, { maxAge: 44444444444, httpOnly: true, overwrite: true })
-    pool.getConnection().then((conn) => {
-      conn
-        .query('INSERT INTO connection_log VALUES (UUID(), ?, ?, INET6_ATON(?), ?, ?, ?, ?, ?, DEFAULT)', [
-          newSessionID,
-          req.path,
-          getTrueIP(req),
-          req.headers['user-agent'],
-          getBrowserFromUA(req.headers['user-agent']),
-          getOSFromUA(req.headers['user-agent']),
-          getDeviceFromUA(req.headers['user-agent']),
-          req.headers['referer'] ? req.headers['referer'] : null
-        ])
-        .then(() => {
-          conn.release()
-        })
-    })
     console.log(`${getLogTimestamp()} New visitor created session cookie ${newSessionID}`)
+    sessionID = newSessionID
   }
+
+  const ipGeolocationEndpoint = `https://freeipapi.com/api/json/${getTrueIP(req)}`
+  axios
+    .get(ipGeolocationEndpoint)
+    .then((response) => {
+      const ipGeolocationData = response.data
+      console.log(ipGeolocationData)
+      pool.getConnection().then((conn) => {
+        conn
+          .query('INSERT INTO connection_log VALUES (UUID(), ?, ?, INET6_ATON(?), ?, ?, ?, ?, ?, ?, ?, ?, ?, DEFAULT)', [
+            sessionID,
+            req.path,
+            getTrueIP(req),
+            req.headers['user-agent'],
+            getBrowserFromUA(req.headers['user-agent']),
+            getOSFromUA(req.headers['user-agent']),
+            getDeviceFromUA(req.headers['user-agent']),
+            req.headers['referer'] ? req.headers['referer'] : null,
+            ipGeolocationData.countryName == '-' ? null : ipGeolocationData.latitude,
+            ipGeolocationData.countryName == '-' ? null : ipGeolocationData.longitude,
+            ipGeolocationData.countryName == '-' ? null : ipGeolocationData.countryName,
+            ipGeolocationData.isProxy
+          ])
+          .then(() => {
+            conn.release()
+          })
+      })
+    })
+    .catch((error) => {
+      console.error(error)
+    })
+
   next()
 })
 
