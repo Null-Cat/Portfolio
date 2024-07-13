@@ -62,7 +62,6 @@ app.use((req, res, next) => {
     .get(ipGeolocationEndpoint)
     .then((response) => {
       const ipGeolocationData = response.data
-      console.log(ipGeolocationData)
       pool.getConnection().then((conn) => {
         conn
           .query('INSERT INTO connection_log VALUES (UUID(), ?, ?, INET6_ATON(?), ?, ?, ?, ?, ?, ?, ?, ?, ?, DEFAULT)', [
@@ -166,7 +165,7 @@ function getTrueIP(req) {
 }
 
 function getBrowserFromUA(ua) {
-  let browser = ua.match(/(firefox|chrome|safari|opera|edge|msie|trident)/i)
+  let browser = ua.match(/(firefox|edge|chrome|safari|opera|msie|trident)/i)
   return browser ? browser[0] : 'unknown'
 }
 
