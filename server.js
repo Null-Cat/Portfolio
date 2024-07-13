@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const cookieParser = require('cookie-parser')
+const uaParser = require('ua-parser-js')
 const fs = require('fs')
 const mariadb = require('mariadb')
 const clc = require('cli-color')
@@ -69,9 +70,9 @@ app.use((req, res, next) => {
             req.path,
             getTrueIP(req),
             req.headers['user-agent'],
-            getBrowserFromUA(req.headers['user-agent']),
-            getOSFromUA(req.headers['user-agent']),
-            getDeviceFromUA(req.headers['user-agent']),
+            uaParser(req.headers['user-agent']).browser.name,
+            uaParser(req.headers['user-agent']).os.name,
+            uaParser(req.headers['user-agent']).device.type ? uaParser(req.headers['user-agent']).device.type : 'Desktop',
             req.headers['referer'] ? req.headers['referer'] : null,
             ipGeolocationData.countryName == '-' ? null : ipGeolocationData.latitude,
             ipGeolocationData.countryName == '-' ? null : ipGeolocationData.longitude,
@@ -162,21 +163,6 @@ app.listen(port, () => {
 
 function getTrueIP(req) {
   return req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.socket.remoteAddress.replace('::ffff:', '')
-}
-
-function getBrowserFromUA(ua) {
-  let browser = ua.match(/(firefox|edge|chrome|safari|opera|msie|trident)/i)
-  return browser ? browser[0] : 'unknown'
-}
-
-function getOSFromUA(ua) {
-  let os = ua.match(/(windows|macintosh|linux|android|ios)/i)
-  return os ? os[0] : 'unknown'
-}
-
-function getDeviceFromUA(ua) {
-  let device = ua.match(/(mobile|tablet)/i)
-  return device ? device[0] : 'Desktop'
 }
 
 function getLogTimestamp() {
