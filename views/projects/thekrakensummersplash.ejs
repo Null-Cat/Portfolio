@@ -63,6 +63,30 @@
 
             <h3 class="text-center" style="padding-top: 25px;">My Contributions</h3>
 
+            <h4 class="text-center" style="padding-top: 25px;">Gameplay</h4>
+            <div class="row" style="padding-top: 10px;">
+                <div class="col-sm-12 col-md-6">
+                    <p>
+                        The game play simulates a branded theme of Flappy Bird with a Kraken Rum twist. The player has
+                        to
+                        navigate through a series of obstacles aka the krakens tentacles ramping up in difficulty as you
+                        progress through the game capped at a certain speed to give players the ability to get a higher
+                        score based on skill rather than random number generation. The game also has a series of bonus
+                        items that the player can collect
+                        to increase their score by risking their lives to get them.
+                    </p>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="d-flex flex-column">
+                        <img src="/kraken/KrakenSnippet3.png" alt="Kraken Snippet" class="w-100">
+                        <img src="/kraken/KrakenSnippet4.png" alt="Kraken Snippet" class="w-100"
+                            style="padding-top: 5px;">
+                        <img src="/kraken/KrakenSnippet5.png" alt="Kraken Snippet" class="w-100"
+                            style="padding-top: 5px;">
+                    </div>
+                </div>
+            </div>
+
             <h4 class="text-center" style="padding-top: 25px;">Securing Scores & Retrieving/Sending API Data</h4>
             <div class="row" style="padding-top: 10px;">
                 <div class="col-sm-12 col-md-6">
@@ -80,13 +104,25 @@
                         storing the scores in multiple variables
                         obfuscating the names and functions that check the scores as you pass through each tunnel. I
                         also used a obfuscating tool called "Javascript Obfuscator" to obfuscate the code further by
-                        including the whole game script. I also used a encryption technique using AES to encrypt the
-                        scores set by
+                        including the whole game script. I also used a encryption technique using AES-128-CBC to encrypt
+                        the
+                        payload set by
                         Kraken Rum's hosts of the game, this was done by using a encryption key and salt that was
                         provided
                         by the hosts and encrypting the scores then sending the encrypted scores to the API endpoint
                         provided, in
                         the form of a POST request as stated by the API documentation.
+                        <br>
+                        <br>
+                        As I had no access to the API endpoint all cheat detect was done on the client side, this was
+                        done
+                        by checking if the add score function was triggered as long as the player is in the collision
+                        box and triggered once per collision. If the function was triggered more than once per collision
+                        then the player was flagged as a cheater and the score was not sent to the API.
+                        Another cheat detection was done by comparing the score value to the string value of the UI
+                        score
+                        and if they did not match then the player was flagged as a cheater and the score was not sent to
+                        the API.
                     </p>
                 </div>
                 <div class="col-sm-12 col-md-6">
