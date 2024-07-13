@@ -1,8 +1,11 @@
 require('dotenv').config()
 const express = require('express')
+const cookieParser = require('cookie-parser')
 const fs = require('fs')
+const mariadb = require('mariadb')
 const clc = require('cli-color')
 const nodemailer = require('nodemailer')
+const { randomUUID } = require('crypto')
 let nodeMailerTransporter = nodemailer.createTransport({
   host: 'mail.spacemail.com',
   port: 465,
@@ -14,6 +17,13 @@ let nodeMailerTransporter = nodemailer.createTransport({
   tls: {
     rejectUnauthorized: false
   }
+})
+const pool = mariadb.createPool({
+  host: '192.168.0.100',
+  user: 'portfolio',
+  database: 'portfolio',
+  password: process.env.DB_PASSWORD,
+  connectionLimit: 10
 })
 
 const app = express()
@@ -27,6 +37,46 @@ app.use(express.urlencoded({ extended: true }))
 app.use(LogConnections)
 
 app.use(express.static('public'))
+app.use(cookieParser())
+
+app.use((req, res, next) => {
+  let sessionID = req.cookies.session_id
+  if (sessionID) {
+    res.cookie('session_id', sessionID, { maxAge: 44444444444, httpOnly: true, overwrite: true })
+    console.log(`${getLogTimestamp()} Returning visitor with session cookie ${sessionID}`)
+    pool.getConnection().then((conn) => {
+      conn
+        .query('INSERT INTO connection_log VALUES (UUID(), ?, ?, INET6_ATON(?), ?, ?, DEFAULT)', [
+          sessionID,
+          req.path,
+          getTrueIP(req),
+          req.headers['user-agent'],
+          req.headers['referer'] ? req.headers['referer'] : null
+        ])
+        .then(() => {
+          conn.release()
+        })
+    })
+  } else {
+    let newSessionID = randomUUID()
+    res.cookie('session_id', newSessionID, { maxAge: 44444444444, httpOnly: true, overwrite: true })
+    pool.getConnection().then((conn) => {
+      conn
+        .query('INSERT INTO connection_log VALUES (UUID(), ?, ?, INET6_ATON(?), ?, ?, DEFAULT)', [
+          newSessionID,
+          req.path,
+          getTrueIP(req),
+          req.headers['user-agent'],
+          req.headers['referer'] ? req.headers['referer'] : null
+        ])
+        .then(() => {
+          conn.release()
+        })
+    })
+    console.log(`${getLogTimestamp()} New visitor created session cookie ${newSessionID}`)
+  }
+  next()
+})
 
 app.get(['/', '/index', '/index.(html|php)'], (req, res) => {
   res.render('index')
@@ -49,16 +99,10 @@ app.get('/projects/:id', (req, res) => {
 })
 
 app.post('/api/contact', express.json(), (req, res) => {
-  console.log(
-    `${getLogTimestamp()} ${clc.inverse('POST')} request to send message from ${clc.cyan(req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.socket.remoteAddress)}`
-  )
+  console.log(`${getLogTimestamp()} ${clc.inverse('POST')} request to send message from ${clc.cyan(getTrueIP(req))}`)
 
   if (req.body.xr) {
-    console.log(
-      `${getLogTimestamp()} ${clc.bgRed.white('403')} bot detected for ${req.body.name} ${clc.cyan(
-        req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.socket.remoteAddress
-      )}`
-    )
+    console.log(`${getLogTimestamp()} ${clc.bgRed.white('403')} bot detected for ${req.body.name} ${clc.cyan(getTrueIP(req))}`)
     res.sendStatus(403)
     return
   }
@@ -82,18 +126,10 @@ app.post('/api/contact', express.json(), (req, res) => {
 
   nodeMailerTransporter.sendMail(email, (err) => {
     if (err) {
-      console.log(
-        `${getLogTimestamp()} ${clc.bgRed.white('500')} failed to send message for ${req.body.name} ${clc.cyan(
-          req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.socket.remoteAddress
-        )} - ${err}`
-      )
+      console.log(`${getLogTimestamp()} ${clc.bgRed.white('500')} failed to send message for ${req.body.name} ${clc.cyan(getTrueIP(req))} - ${err}`)
       res.sendStatus(500)
     } else {
-      console.log(
-        `${getLogTimestamp()} ${clc.bgGreen.white('200')} message sent successfully for ${req.body.name} ${clc.cyan(
-          req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.socket.remoteAddress
-        )}`
-      )
+      console.log(`${getLogTimestamp()} ${clc.bgGreen.white('200')} message sent successfully for ${req.body.name} ${clc.cyan(getTrueIP(req))}`)
       res.sendStatus(200)
     }
   })
@@ -104,17 +140,17 @@ app.all('*', (req, res) => {
 })
 
 function LogConnections(req, res, next) {
-  console.log(
-    `${getLogTimestamp()} ${clc.inverse(req.method)} request for ${clc.underline(req.url)} from ${clc.cyan(
-      req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.socket.remoteAddress
-    )}`
-  )
+  console.log(`${getLogTimestamp()} ${clc.inverse(req.method)} request for ${clc.underline(req.url)} from ${clc.cyan(getTrueIP(req))}`)
   next()
 }
 
 app.listen(port, () => {
   console.log(`${clc.green(`${getLogTimestamp()} Listening on port ${port}`)}`)
 })
+
+function getTrueIP(req) {
+  return req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.socket.remoteAddress.replace('::ffff:', '')
+}
 
 function getLogTimestamp() {
   let date = new Date()
