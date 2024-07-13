@@ -46,11 +46,14 @@ app.use((req, res, next) => {
     console.log(`${getLogTimestamp()} Returning visitor with session cookie ${sessionID}`)
     pool.getConnection().then((conn) => {
       conn
-        .query('INSERT INTO connection_log VALUES (UUID(), ?, ?, INET6_ATON(?), ?, ?, DEFAULT)', [
+        .query('INSERT INTO connection_log VALUES (UUID(), ?, ?, INET6_ATON(?), ?, ?, ?, ?, ?, DEFAULT)', [
           sessionID,
           req.path,
           getTrueIP(req),
           req.headers['user-agent'],
+          getBrowserFromUA(req.headers['user-agent']),
+          getOSFromUA(req.headers['user-agent']),
+          getDeviceFromUA(req.headers['user-agent']),
           req.headers['referer'] ? req.headers['referer'] : null
         ])
         .then(() => {
@@ -62,11 +65,14 @@ app.use((req, res, next) => {
     res.cookie('session_id', newSessionID, { maxAge: 44444444444, httpOnly: true, overwrite: true })
     pool.getConnection().then((conn) => {
       conn
-        .query('INSERT INTO connection_log VALUES (UUID(), ?, ?, INET6_ATON(?), ?, ?, DEFAULT)', [
+        .query('INSERT INTO connection_log VALUES (UUID(), ?, ?, INET6_ATON(?), ?, ?, ?, ?, ?, DEFAULT)', [
           newSessionID,
           req.path,
           getTrueIP(req),
           req.headers['user-agent'],
+          getBrowserFromUA(req.headers['user-agent']),
+          getOSFromUA(req.headers['user-agent']),
+          getDeviceFromUA(req.headers['user-agent']),
           req.headers['referer'] ? req.headers['referer'] : null
         ])
         .then(() => {
@@ -150,6 +156,21 @@ app.listen(port, () => {
 
 function getTrueIP(req) {
   return req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.socket.remoteAddress.replace('::ffff:', '')
+}
+
+function getBrowserFromUA(ua) {
+  let browser = ua.match(/(firefox|chrome|safari|opera|edge|msie|trident)/i)
+  return browser ? browser[0] : 'unknown'
+}
+
+function getOSFromUA(ua) {
+  let os = ua.match(/(windows|macintosh|linux|android|ios)/i)
+  return os ? os[0] : 'unknown'
+}
+
+function getDeviceFromUA(ua) {
+  let device = ua.match(/(mobile|tablet)/i)
+  return device ? device[0] : 'Desktop'
 }
 
 function getLogTimestamp() {
