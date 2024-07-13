@@ -73,7 +73,7 @@ app.use((req, res, next) => {
             uaParser(req.headers['user-agent']).browser.name,
             uaParser(req.headers['user-agent']).os.name,
             uaParser(req.headers['user-agent']).device.type ? capitalizeFirstLetter(uaParser(req.headers['user-agent']).device.type) : 'Desktop',
-            req.headers['referer'] ? req.headers['referer'] : null,
+            req.headers['referer'] ? `${new URL(req.headers['referer']).host}${new URL(req.headers['referer']).pathname}` : null,
             ipGeolocationData.countryName == '-' ? null : ipGeolocationData.latitude,
             ipGeolocationData.countryName == '-' ? null : ipGeolocationData.longitude,
             ipGeolocationData.countryName == '-' ? null : ipGeolocationData.countryName,
