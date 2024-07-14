@@ -51,11 +51,11 @@ app.use((req, res, next) => {
 
   let sessionID = req.cookies.session_id
   if (sessionID) {
-    res.cookie('session_id', sessionID, { maxAge: 44444444444, httpOnly: true, overwrite: true })
+    res.cookie('session_id', sessionID, { maxAge: 44444444444, httpOnly: true, secure: true, overwrite: true })
     console.log(`${getLogTimestamp()} Returning visitor with session cookie ${sessionID}`)
   } else {
     let newSessionID = randomUUID()
-    res.cookie('session_id', newSessionID, { maxAge: 44444444444, httpOnly: true, overwrite: true })
+    res.cookie('session_id', newSessionID, { maxAge: 44444444444, httpOnly: true, secure: true, overwrite: true })
     console.log(`${getLogTimestamp()} New visitor created session cookie ${newSessionID}`)
     sessionID = newSessionID
   }
