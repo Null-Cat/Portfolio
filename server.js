@@ -8,6 +8,7 @@ const clc = require('cli-color')
 const nodemailer = require('nodemailer')
 const { randomUUID } = require('crypto')
 const axios = require('axios')
+const { get } = require('http')
 
 let nodeMailerTransporter = nodemailer.createTransport({
   host: 'mail.spacemail.com',
@@ -32,6 +33,8 @@ const pool = mariadb.createPool({
 const app = express()
 const port = process.env.PORT || 3000
 
+var serverIP = ''
+
 app.set('view engine', 'ejs')
 app.set('views', './views')
 app.enable('trust proxy')
@@ -44,7 +47,14 @@ app.use(cookieParser())
 
 // Middleware to log connection data to the database and set a session cookie to track returning visitors
 app.use((req, res, next) => {
+  // Only log connections to the database for the root URL and project pages
   if (!(req.path == '/' || req.path.includes('/projects/'))) {
+    next()
+    return
+  }
+
+  // Do not log connections from the server IP
+  if (getTrueIP(req) == serverIP) {
     next()
     return
   }
@@ -158,6 +168,15 @@ app.all('*', (req, res) => {
   res.sendStatus(404)
 })
 
+// Server start
+async function init() {
+  serverIP = await getServerIP()
+  app.listen(port, () => {
+    console.log(`${clc.green(`${getLogTimestamp()} Listening on port ${port} at ${serverIP}`)}`)
+  })
+}
+init()
+
 /**
  * Middleware function to log incoming connections.
  *
@@ -170,10 +189,23 @@ function LogConnections(req, res, next) {
   next()
 }
 
-// Server start
-app.listen(port, () => {
-  console.log(`${clc.green(`${getLogTimestamp()} Listening on port ${port}`)}`)
-})
+/**
+ * Retrieves the server IP address.
+ * @returns {Promise<string>} A promise that resolves with the server IP address.
+ */
+function getServerIP() {
+  return new Promise((resolve, reject) => {
+    axios
+      .get('https://api.ipify.org?format=json')
+      .then((response) => {
+        resolve(response.data.ip)
+      })
+      .catch((error) => {
+        console.error(error)
+        reject(error)
+      })
+  })
+}
 
 /**
  * Retrieves the true IP address from the request object.
