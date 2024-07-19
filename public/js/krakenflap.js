@@ -1227,7 +1227,7 @@ function create() {
           background.visible = true
           prepareGame(this)
           showMainMenu()
-          bgm.play()
+          //bgm.play()
           splashScreen.destroy()
         },
         repeat: 0,
