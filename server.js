@@ -8,7 +8,6 @@ const clc = require('cli-color')
 const nodemailer = require('nodemailer')
 const { randomUUID } = require('crypto')
 const axios = require('axios')
-const { get } = require('http')
 
 let nodeMailerTransporter = nodemailer.createTransport({
   host: 'mail.spacemail.com',
@@ -110,7 +109,7 @@ app.get(['/', '/index', '/index.(html|php)'], (req, res) => {
 
 // Render the requested project page if it exists
 app.get('/projects/:id', (req, res) => {
-  fs.readFile(`./views/projects/${req.params.id.toLowerCase()}.ejs`, (err, data) => {
+  fs.readFile(`./views/projects/${req.params.id.toLowerCase()}.ejs`, (err) => {
     if (err) {
       res.sendStatus(404)
       console.log(`${getLogTimestamp()} ${clc.bgRed.white('404')} project ${clc.underline(req.params.id.toLowerCase())} does not exist`)
