@@ -76,7 +76,7 @@ app.use((req, res, next) => {
       const ipGeolocationData = response.data
       pool.getConnection().then((conn) => {
         conn
-          .query('INSERT INTO connection_log VALUES (UUID(), ?, ?, INET6_ATON(?), ?, ?, ?, ?, ?, ?, ?, ?, ?, DEFAULT)', [
+          .query('INSERT INTO connection_log VALUES (UUID(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, DEFAULT)', [
             sessionID,
             req.path,
             getTrueIP(req),
