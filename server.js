@@ -212,7 +212,7 @@ function getServerIP() {
  * @returns {string} The true IP address.
  */
 function getTrueIP(req) {
-  return req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.socket.remoteAddress.replace('::ffff:', '')
+  return req.headers['Cf-Connecting-IP'] ? req.headers['Cf-Connecting-IP'] : req.socket.remoteAddress.replace('::ffff:', '')
 }
 
 /**
