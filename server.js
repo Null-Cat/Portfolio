@@ -202,7 +202,7 @@ app.post("/api/contact", express.json(), (req, res) => {
   }
 
   let email = {
-    from: `${req.body.name} <philip@philipwhite.dev>`,
+    from: `"${req.body.name}" <philip@philipwhite.dev>`,
     to: "philip@philipwhite.dev",
     subject: `Portfolio Message: ${req.body.subject}`,
     text: `Name: ${req.body.name}\nEmail: ${req.body.email}\nMessage:\n${req.body.message}`,
