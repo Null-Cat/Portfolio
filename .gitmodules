@@ -1,0 +1,3 @@
+[submodule "ua-parser-js"]
+	path = ua-parser-js
+	url = https://github.com/faisalman/ua-parser-js.git

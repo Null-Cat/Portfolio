@@ -52,9 +52,9 @@ module.exports = {
       fetch: 'all',
       // Path in the server
       path: '/var/www/portfolio',
-      'post-setup': 'ls -la',
+      'post-setup': 'git submodule update --init && ls -la',
       // Command run after pull source code
-      'post-deploy': 'sudo npm install && sudo pm2 reload ecosystem.config.js --env production'
+      'post-deploy': 'sudo git submodule update && sudo npm install && sudo pm2 reload ecosystem.config.js --env production'
     }
   }
 }

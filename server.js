@@ -1,7 +1,9 @@
 require("dotenv").config();
 const express = require("express");
 const cookieParser = require("cookie-parser");
-const userAgentParser = require("ua-parser-js");
+const uaParser = require("./ua-parser-js/src/main/ua-parser");
+const uaParserExtensions = require("./ua-parser-js/src/extensions/ua-parser-extensions");
+const userAgentParser = new uaParser(uaParserExtensions);
 const fs = require("fs");
 const mariadb = require("mariadb");
 const clc = require("cli-color");
@@ -90,21 +92,20 @@ app.use((req, res, next) => {
     .get(ipGeolocationEndpoint)
     .then((response) => {
       const ipGeolocationData = response.data;
+      const uaParserData = userAgentParser.setUA(req.headers["user-agent"]);
       pool.getConnection().then((conn) => {
         conn
           .query(
-            "INSERT INTO connection_log VALUES (UUID(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, DEFAULT)",
+            "INSERT INTO connection_log VALUES (UUID(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, DEFAULT)",
             [
               sessionID,
               req.path,
               getTrueIP(req),
               req.headers["user-agent"],
-              userAgentParser(req.headers["user-agent"]).browser.name,
-              userAgentParser(req.headers["user-agent"]).os.name,
-              userAgentParser(req.headers["user-agent"]).device.type
-                ? capitalizeFirstLetter(
-                    userAgentParser(req.headers["user-agent"]).device.type
-                  )
+              uaParserData.getBrowser().name,
+              uaParserData.getOS().name,
+              uaParserData.getDevice().type
+                ? capitalizeFirstLetter(uaParserData.getDevice().type)
                 : "Desktop",
               req.headers["referer"] &&
               !new URL(req.headers["referer"]).host.includes("philipwhite.dev")
@@ -122,6 +123,7 @@ app.use((req, res, next) => {
                 ? null
                 : ipGeolocationData.countryName,
               ipGeolocationData.isProxy,
+              uaParserData.getBrowser().type == "crawler" ? true : false,
             ]
           )
           .then(() => {
