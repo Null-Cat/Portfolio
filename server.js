@@ -54,6 +54,11 @@ app.use((req, res, next) => {
     return;
   }
 
+  // Set a flag to indicate if the connection is from CV
+  if (req.query.ref == "cv") {
+    req.fromCV = "cv";
+  }
+
   // Do not log connections from the server IP
   if (getTrueIP(req) == serverIP) {
     next();
@@ -107,8 +112,12 @@ app.use((req, res, next) => {
               uaParserData.getDevice().type
                 ? capitalizeFirstLetter(uaParserData.getDevice().type)
                 : "Desktop",
-              req.headers["referer"] &&
-              !new URL(req.headers["referer"]).host.includes("philipwhite.dev")
+              req.fromCV
+                ? "CV"
+                : req.headers["referer"] &&
+                  !new URL(req.headers["referer"]).host.includes(
+                    "philipwhite.dev"
+                  )
                 ? `${new URL(req.headers["referer"]).host}${
                     new URL(req.headers["referer"]).pathname
                   }`
