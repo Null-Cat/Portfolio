@@ -156,7 +156,7 @@ app.get(["/", "/index", "/index.(html|php)"], (req, res) => {
 app.get("/projects/:id", (req, res) => {
   fs.readFile(`./views/projects/${req.params.id.toLowerCase()}.ejs`, (err) => {
     if (err) {
-      res.sendStatus(404);
+      res.status(404).send();
       console.log(
         `${getLogTimestamp()} ${clc.bgRed.white("404")} project ${clc.underline(
           req.params.id.toLowerCase()
@@ -169,7 +169,7 @@ app.get("/projects/:id", (req, res) => {
             req.params.id.toLowerCase()
           )} contains invalid characters`
         );
-        res.sendStatus(403);
+        res.status(403).send();
       } else {
         res.render(`./projects/${req.params.id.toLowerCase()}`);
       }
@@ -191,14 +191,14 @@ app.post("/api/contact", express.json(), (req, res) => {
         req.body.name
       } ${clc.cyan(getTrueIP(req))}`
     );
-    res.sendStatus(403);
+    res.status(403).send();
     return;
   }
 
   if (
     !(req.body.name && req.body.email && req.body.subject && req.body.message)
   ) {
-    res.sendStatus(400);
+    res.status(400).send();
     return;
   }
 
@@ -208,7 +208,7 @@ app.post("/api/contact", express.json(), (req, res) => {
     req.body.subject.length > 100 ||
     req.body.message.length > 1000
   ) {
-    res.sendStatus(413);
+    res.status(413).send();
     return;
   }
 
@@ -235,7 +235,7 @@ app.post("/api/contact", express.json(), (req, res) => {
           getTrueIP(req)
         )} - ${err}`
       );
-      res.sendStatus(500);
+      res.status(500).send();
     } else {
       console.log(
         `${getLogTimestamp()} ${clc.bgGreen.white(
@@ -244,14 +244,14 @@ app.post("/api/contact", express.json(), (req, res) => {
           getTrueIP(req)
         )}`
       );
-      res.sendStatus(200);
+      res.status(200).send();
     }
   });
 });
 
 // 404 any other requests
 app.all("*", (req, res) => {
-  res.sendStatus(404);
+  res.status(404).send();
 });
 
 // Server start
