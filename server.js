@@ -132,7 +132,7 @@ app.use((req, res, next) => {
                 ? null
                 : ipGeolocationData.countryName,
               ipGeolocationData.isProxy,
-              uaParserData.getBrowser().type == "crawler" ? true : false,
+              uaParserData.getBrowser().type == "crawler" || uaParserData.getBrowser().name == "facebookexternalhit" ? true : false,
             ]
           )
           .then(() => {
