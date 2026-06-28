@@ -29,6 +29,6 @@
     "ejs": "^3.1.10",
     "express": "^4.21.2",
     "mariadb": "^3.3.1",
-    "nodemailer": "^7.0.7"
+    "nodemailer": "^9.0.1"
   }
 }
